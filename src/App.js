@@ -9,14 +9,14 @@ function App() {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      const res = await axios.get('http://localhost:5000/questions');
+      const res = await axios.get('https://vivaqbackend.onrender.com/questions');
       setQuestions(res.data);
     };
     fetchQuestions();
   }, []);
 
   const addQuestion = async (name, topic, question) => {
-    const res = await axios.post('http://localhost:5000/questions', { name, topic, question });
+    const res = await axios.post('https://vivaqbackend.onrender.com/questions', { name, topic, question });
     setQuestions([...questions, res.data]);
   };
 
