@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Form from './Form';
 import QuestionList from './QuestionList';
 import './App.css';
@@ -7,8 +7,17 @@ import './App.css';
 function App() {
   const [questions, setQuestions] = useState([]);
 
-  const addQuestion = (name, topic, question) => {
-    setQuestions([...questions, { id: uuidv4(), name, topic, question }]);
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      const res = await axios.get('http://localhost:5000/questions');
+      setQuestions(res.data);
+    };
+    fetchQuestions();
+  }, []);
+
+  const addQuestion = async (name, topic, question) => {
+    const res = await axios.post('http://localhost:5000/questions', { name, topic, question });
+    setQuestions([...questions, res.data]);
   };
 
   return (
